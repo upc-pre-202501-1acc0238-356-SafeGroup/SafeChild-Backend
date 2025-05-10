@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - SafeChild
+name: Build and deploy JAR app to Azure Web App - safechild
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
-        run: mvn clean install -DskipTests
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -52,15 +52,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FB0860B2AA33432A94B07A5CC04E238A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_57C92BE985FB425FB361907C25075528 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_95435741DDE544D4B87C9D6C26696F84 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_89A373445C294E35B05F114CA29C613F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1C6A7BCED4E34735939215C4D158D0FD }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6953568C114349E6B2C06F2D0B1EF4A2 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'SafeChild'
+          app-name: 'safechild'
           slot-name: 'Production'
           package: '*.jar'
           
