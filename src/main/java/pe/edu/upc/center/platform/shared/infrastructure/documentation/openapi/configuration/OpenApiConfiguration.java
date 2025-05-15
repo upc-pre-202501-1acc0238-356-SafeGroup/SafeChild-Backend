@@ -14,9 +14,10 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfiguration {
   @Bean
   public OpenAPI learningPlatformOpenApi() {
+    final String securitySchemeName = "BearerAuth";
     // General configuration
-    var openApi = new OpenAPI();
-    openApi
+    // var openApi = new OpenAPI();
+    return new OpenAPI()
             .info(new Info()
                     .title("Safe Child API")
                     .description("Safe Child application REST API documentation.")
@@ -25,21 +26,13 @@ public class OpenApiConfiguration {
                             .url("https://springdoc.org")))
             .externalDocs(new ExternalDocumentation()
                     .description(" Learning Platform Documentation")
-                    .url("https://github.com/upc-is-si729/daos-language-reference"));
-
-//    // Add security scheme
-//    final String securitySchemeName = "bearerAuth";
-//
-//    openApi.addSecurityItem(new SecurityRequirement()
-//                    .addList(securitySchemeName))
-//            .components(new Components()
-//                    .addSecuritySchemes(securitySchemeName,
-//                            new SecurityScheme()
-//                                    .name(securitySchemeName)
-//                                    .type(SecurityScheme.Type.HTTP)
-//                                    .scheme("bearer")
-//                                    .bearerFormat("JWT")));
-
-    return openApi;
+                    .url("https://github.com/upc-is-si729/daos-language-reference"))
+            .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+            .components(new Components()
+                    .addSecuritySchemes(securitySchemeName, new SecurityScheme()
+                            .name(securitySchemeName)
+                            .type(SecurityScheme.Type.HTTP)
+                            .scheme("bearer")
+                            .bearerFormat("JWT")));
   }
 }
