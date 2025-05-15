@@ -2,10 +2,11 @@ package pe.edu.upc.center.platform.user.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.user.application.internal.outboundservices.acl.ExternalProfileService;
-import pe.edu.upc.center.platform.user.domain.model.aggregates.Tutor;
+import pe.edu.upc.center.platform.user.domain.model.entities.Tutor;
 import pe.edu.upc.center.platform.user.domain.model.commands.CreateTutorCommand;
 import pe.edu.upc.center.platform.user.domain.model.commands.DeleteTutorCommand;
 import pe.edu.upc.center.platform.user.domain.model.commands.UpdateTutorCommand;
+import pe.edu.upc.center.platform.user.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.user.domain.services.TutorCommandService;
 import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.TutorRepository;
 
@@ -26,7 +27,7 @@ public class TutorCommandServiceImpl implements TutorCommandService {
     @Override
     public Long handle(CreateTutorCommand command) {
         var fullName = command.fullName();
-        if (this.tutorRepository.existsByFullName(fullName)) {
+        if (this.tutorRepository.existsByCompleteName(new CompleteName(fullName))) {
             throw new IllegalArgumentException("Tutor with full name " + fullName + " already exists");
         }
 
@@ -48,7 +49,7 @@ public class TutorCommandServiceImpl implements TutorCommandService {
     public Optional<Tutor> handle(UpdateTutorCommand command) {
         var tutorId = command.tutorId();
         var fullName = command.fullName();
-        if (this.tutorRepository.existsByFullNameAndIdIsNot(fullName, tutorId)) {
+        if (this.tutorRepository.existsByCompleteNameAndIdIsNot(new CompleteName(fullName), tutorId)) {
             throw new IllegalArgumentException("Tutor with full name " + fullName + " already exists");
         }
 
