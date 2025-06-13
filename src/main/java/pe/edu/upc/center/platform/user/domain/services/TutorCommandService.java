@@ -1,6 +1,6 @@
 package pe.edu.upc.center.platform.user.domain.services;
 
-import pe.edu.upc.center.platform.user.domain.model.entities.Tutor;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Tutor;
 import pe.edu.upc.center.platform.user.domain.model.commands.CreateTutorCommand;
 import pe.edu.upc.center.platform.user.domain.model.commands.DeleteTutorCommand;
 import pe.edu.upc.center.platform.user.domain.model.commands.UpdateTutorCommand;

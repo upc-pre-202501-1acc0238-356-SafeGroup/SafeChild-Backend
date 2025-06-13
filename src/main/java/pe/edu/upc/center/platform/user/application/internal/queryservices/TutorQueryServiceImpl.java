@@ -1,11 +1,10 @@
 package pe.edu.upc.center.platform.user.application.internal.queryservices;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.user.domain.model.entities.Tutor;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Tutor;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllTutorsQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetTutorByFullNameQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetTutorByIdQuery;
-import pe.edu.upc.center.platform.user.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.user.domain.services.TutorQueryService;
 import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.TutorRepository;
 
@@ -34,6 +33,6 @@ public class TutorQueryServiceImpl implements TutorQueryService {
 
     @Override
     public Optional<Tutor> handle(GetTutorByFullNameQuery query) {
-        return this.tutorRepository.findByCompleteName(new CompleteName(query.fullName()));
+        return this.tutorRepository.findByFullName(query.fullName());
     }
 }

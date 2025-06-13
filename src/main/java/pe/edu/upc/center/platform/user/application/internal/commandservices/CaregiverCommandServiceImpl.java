@@ -2,13 +2,12 @@ package pe.edu.upc.center.platform.user.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.user.application.internal.outboundservices.acl.ExternalProfileService;
-import pe.edu.upc.center.platform.user.domain.model.entities.Caregiver;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.entities.CaregiverSchedule;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverCommandService;
 import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.CaregiverRepository;
 import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.CaregiverScheduleRepository;
 import pe.edu.upc.center.platform.user.domain.model.commands.*;
-import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.UserRepository;
 
 import java.util.Optional;
 
@@ -16,13 +15,11 @@ import java.util.Optional;
 public class CaregiverCommandServiceImpl implements CaregiverCommandService {
 
     private final CaregiverRepository caregiverRepository;
-    private final UserRepository userRepository;
     private final CaregiverScheduleRepository caregiverScheduleRepository;
     private final ExternalProfileService externalProfileService;
 
-    public CaregiverCommandServiceImpl(CaregiverRepository caregiverRepository, UserRepository userRepository, CaregiverScheduleRepository caregiverScheduleRepository, ExternalProfileService externalProfileService) {
+    public CaregiverCommandServiceImpl(CaregiverRepository caregiverRepository, CaregiverScheduleRepository caregiverScheduleRepository, ExternalProfileService externalProfileService) {
         this.caregiverRepository = caregiverRepository;
-        this.userRepository = userRepository;
         this.caregiverScheduleRepository = caregiverScheduleRepository;
         this.externalProfileService = externalProfileService;
     }

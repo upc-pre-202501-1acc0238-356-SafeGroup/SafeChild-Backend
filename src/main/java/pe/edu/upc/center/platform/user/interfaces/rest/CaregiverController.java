@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.upc.center.platform.user.domain.model.entities.Caregiver;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByIdQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByLocationQuery;
