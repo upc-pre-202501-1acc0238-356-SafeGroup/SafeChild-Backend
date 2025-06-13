@@ -1,7 +1,7 @@
 package pe.edu.upc.center.platform.user.interfaces.acl;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
+import pe.edu.upc.center.platform.user.domain.model.entities.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByIdQuery;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverCommandService;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverQueryService;

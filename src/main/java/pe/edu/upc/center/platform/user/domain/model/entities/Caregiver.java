@@ -1,8 +1,9 @@
-package pe.edu.upc.center.platform.user.domain.model.aggregates;
+package pe.edu.upc.center.platform.user.domain.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.User;
 import pe.edu.upc.center.platform.user.domain.model.commands.CreateCaregiverCommand;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
@@ -10,12 +11,7 @@ import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstra
 
 @Entity
 @Table(name = "Caregiver")
-public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
-
-    @Getter
-    @Column(name = "complete_name",nullable = false)
-    @Embedded
-    private CompleteName completeName;
+public class Caregiver extends User {
 
     @Getter
     @Column(name = "age",nullable = false)
@@ -63,7 +59,7 @@ public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
 //    private List<Reservation> reservations = new ArrayList<>();
 
     public Caregiver(CreateCaregiverCommand command) {
-        this.completeName = new CompleteName(command.completeName());
+        super(command);
         this.age = command.age();
         this.address = command.address();
         this.caregiverExperience = command.caregiverExperience();

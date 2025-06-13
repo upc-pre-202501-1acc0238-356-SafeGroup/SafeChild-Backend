@@ -1,6 +1,6 @@
 package pe.edu.upc.center.platform.user.domain.services;
 
-import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
+import pe.edu.upc.center.platform.user.domain.model.entities.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.entities.CaregiverSchedule;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverScheduleByCaregiverIdQuery;

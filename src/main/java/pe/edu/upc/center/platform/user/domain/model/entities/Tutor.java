@@ -1,4 +1,4 @@
-package pe.edu.upc.center.platform.user.domain.model.aggregates;
+package pe.edu.upc.center.platform.user.domain.model.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.User;
 import pe.edu.upc.center.platform.user.domain.model.commands.CreateTutorCommand;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.Address;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.Document;
@@ -14,19 +15,7 @@ import pe.edu.upc.center.platform.user.domain.model.valueobjects.Phone;
 
 @Entity
 @Table(name = "tutors")
-public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
-
-    @Getter
-    @NotNull
-    @NotBlank
-    @Column(name = "full_name", length = 50, nullable = false)
-    private String fullName;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name="email",column = @Column(name = "email", length = 50, nullable = false))
-    })
-    private Email mail;
+public class Tutor extends User {
 
     @Embedded
     @AttributeOverrides({
@@ -69,9 +58,7 @@ public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
     private Long profileId;
 
 
-    public Tutor(String fullName, String email, String doc, String password, String number, String street,String district, String role) {
-        this.fullName = fullName;
-        this.mail = new Email(email);
+    public Tutor(String doc, String password, String number, String street,String district, String role) {
         this.document = new Document(doc);
         this.password = password;
         this.phone = new Phone(number);
@@ -80,14 +67,6 @@ public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
     }
 
     public Tutor() {
-    }
-
-    public void updateEmail(String email) {
-        this.mail = new Email(email);
-    }
-
-    public String getEmail() {
-        return  mail.email();
     }
 
     public void updateDocument(String doc) {
@@ -119,8 +98,7 @@ public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
     }
 
     public Tutor(CreateTutorCommand command) {
-        this.fullName = command.fullName();
-        this.mail = new Email(command.email());
+        super(command);
         this.document =  new Document(command.doc());
         this.password = command.password();
         this.phone= new Phone(command.number());
@@ -129,8 +107,6 @@ public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
     }
 
     public Tutor updateInformation(String fullName, String email, String doc, String password, String number, String street,String district, String role){
-        this.fullName = fullName;
-        this.mail = new Email(email);
         this.document = new Document(doc);
         this.password = password;
         this.phone = new Phone(number);
