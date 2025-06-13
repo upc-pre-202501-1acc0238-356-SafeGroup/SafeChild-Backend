@@ -6,15 +6,15 @@ import pe.edu.upc.center.platform.messaging.domain.model.commands.CreateMessageC
 import pe.edu.upc.center.platform.messaging.domain.services.MessageCommandService;
 import pe.edu.upc.center.platform.messaging.infrastructure.persistence.jpa.repositories.MessageRepository;
 import pe.edu.upc.center.platform.user.domain.model.aggregates.User;
-import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.UserRepository;
+import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.UserRepositoryM;
 
 @Service
 public class MessageCommandServiceImpl implements MessageCommandService {
 
     private final MessageRepository messageRepository;
-    private final UserRepository userRepository;
+    private final UserRepositoryM userRepository;
 
-    public MessageCommandServiceImpl(MessageRepository messageRepository, UserRepository userRepository) {
+    public MessageCommandServiceImpl(MessageRepository messageRepository, UserRepositoryM userRepository) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
     }

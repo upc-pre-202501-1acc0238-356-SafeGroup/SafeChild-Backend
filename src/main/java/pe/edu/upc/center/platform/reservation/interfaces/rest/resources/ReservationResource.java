@@ -2,7 +2,7 @@ package pe.edu.upc.center.platform.reservation.interfaces.rest.resources;
 
 import java.time.LocalDateTime;
 
-    public record ReservationResource(
+public record ReservationResource(
         Long id,
         Long caregiverId,
         Long tutorId,

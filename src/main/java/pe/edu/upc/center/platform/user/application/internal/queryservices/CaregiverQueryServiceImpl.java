@@ -2,7 +2,7 @@ package pe.edu.upc.center.platform.user.application.internal.queryservices;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.user.domain.model.entities.Caregiver;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.entities.CaregiverSchedule;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverScheduleByCaregiverIdQuery;

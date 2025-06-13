@@ -7,7 +7,7 @@ import pe.edu.upc.center.platform.user.domain.model.commands.CreateTutorCommand;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.Email;
 
-@Entity
+@Entity(name = "APP_User")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 

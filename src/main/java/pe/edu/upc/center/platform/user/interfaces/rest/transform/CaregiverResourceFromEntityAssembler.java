@@ -1,6 +1,6 @@
 package pe.edu.upc.center.platform.user.interfaces.rest.transform;
 
-import pe.edu.upc.center.platform.user.domain.model.entities.Caregiver;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.CaregiverResource;
 
 public class CaregiverResourceFromEntityAssembler {

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.commands.CreateCaregiverScheduleCommand;
 import pe.edu.upc.center.platform.shared.domain.model.entities.AuditableModel;
 
