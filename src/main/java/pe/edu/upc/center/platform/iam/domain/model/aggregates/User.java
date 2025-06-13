@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-@Entity(name = "IAM_User")
+@Entity
 public class User extends AuditableAbstractAggregateRoot<User> {
 
     @NotBlank
