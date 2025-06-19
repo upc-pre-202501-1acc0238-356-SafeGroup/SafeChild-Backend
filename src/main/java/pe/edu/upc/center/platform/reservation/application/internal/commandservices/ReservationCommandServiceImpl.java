@@ -1,7 +1,7 @@
 package pe.edu.upc.center.platform.reservation.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.card.application.internal.outboundservices.acl.ExternalCaregiverService;
+import pe.edu.upc.center.platform.reservation.application.internal.outboundservices.acl.ExternalCaregiverService;
 import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.reservation.domain.model.commands.CreateReservationCommand;
 import pe.edu.upc.center.platform.reservation.domain.model.commands.UpdateReservationStatusCommand;
