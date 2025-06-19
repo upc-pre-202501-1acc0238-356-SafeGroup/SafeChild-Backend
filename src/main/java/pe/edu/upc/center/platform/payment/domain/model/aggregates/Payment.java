@@ -16,10 +16,11 @@ import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstra
 public class Payment extends AuditableAbstractAggregateRoot<Payment> {
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     @Column(nullable = false)
-    private Double amount;
+    private Long amount;
 
     @Embedded
     @Column(nullable = false)
@@ -32,7 +33,7 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
     public Payment() {
     }
 
-    public Payment(Currency currency, Double amount, ReservationId reservationId, String stripePaymentId) {
+    public Payment(Currency currency, Long amount, ReservationId reservationId, String stripePaymentId) {
         this.currency = currency;
         this.amount = amount;
         this.reservationId = reservationId;
@@ -41,7 +42,6 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
     public Payment(CreatePaymentCommand command) {
         this.currency = command.currency();
         this.amount = command.amount();
-        this.reservationId = new ReservationId(command.reservationId());
-        this.stripePaymentId = command.stripePaymentId();
+        this.reservationId = command.reservationId();
     }
 }
