@@ -2,35 +2,46 @@ package pe.edu.upc.center.platform.payment.domain.model.aggregates;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import pe.edu.upc.center.platform.card.domain.model.aggregates.Card;
+import lombok.Setter;
 import pe.edu.upc.center.platform.payment.domain.model.commands.CreatePaymentCommand;
-import pe.edu.upc.center.platform.reservation.domain.model.aggregates.Reservation;
+import pe.edu.upc.center.platform.payment.domain.model.valueobjects.Currency;
+import pe.edu.upc.center.platform.payment.domain.model.valueobjects.ReservationId;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+
 
 @Entity
 @Getter
+@Setter
 @Table(name = "payment")
 public class Payment extends AuditableAbstractAggregateRoot<Payment> {
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @Column(nullable = false)
-    private Long userId;
+    private Long amount;
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id", nullable = false)
-    private Reservation reservation;
+    @Embedded
+    @Column(nullable = false)
+    private ReservationId reservationId;
 
-    @ManyToOne
-    @JoinColumn(name = "card_id", nullable = false)
-    private Card card;
+    @Column(nullable = false)
+    private String stripePaymentId;
 
 
     public Payment() {
     }
 
-    public Payment(CreatePaymentCommand command, Reservation reservation, Card card) {
-        this.userId = command.userId();
-        this.reservation = reservation;
-        this.card = card;
+    public Payment(Currency currency, Long amount, ReservationId reservationId, String stripePaymentId) {
+        this.currency = currency;
+        this.amount = amount;
+        this.reservationId = reservationId;
+        this.stripePaymentId = stripePaymentId;
+    }
+    public Payment(CreatePaymentCommand command) {
+        this.currency = command.currency();
+        this.amount = command.amount();
+        this.reservationId = command.reservationId();
     }
 }
