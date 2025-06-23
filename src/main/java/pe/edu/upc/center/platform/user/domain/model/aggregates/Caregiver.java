@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import pe.edu.upc.center.platform.user.domain.model.commands.CreateCaregiverCommand;
+import pe.edu.upc.center.platform.user.domain.model.commands.UpdateCaregiverCommand;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
@@ -76,5 +77,28 @@ public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
 
     public Caregiver() {
 
+    }
+
+
+    // src/main/java/pe/edu/upc/center/platform/user/domain/model/aggregates/Caregiver.java
+    public Caregiver updateInformation(String completeName,
+                                       Integer age, String address,
+                                       Integer caregiverExperience,
+                                       Integer completedServices,
+                                       String biography, String profileImage,
+                                       Double farePerHour,
+                                       String districtsScope,
+                                       Long profileId) {
+        this.completeName = new CompleteName(completeName);
+        this.age = age;
+        this.address = address;
+        this.caregiverExperience = caregiverExperience;
+        this.completedServices = completedServices;
+        this.biography = biography;
+        this.profileImage = profileImage;
+        this.farePerHour = farePerHour;
+        this.districtsScope = districtsScope;
+        this.profileId = profileId;
+        return this;
     }
 }

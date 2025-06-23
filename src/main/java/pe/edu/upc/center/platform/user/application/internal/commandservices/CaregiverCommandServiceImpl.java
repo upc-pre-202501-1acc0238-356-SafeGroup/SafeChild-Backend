@@ -112,4 +112,29 @@ public class CaregiverCommandServiceImpl implements CaregiverCommandService {
             throw new IllegalArgumentException("Error while deleting caregiver schedule: " + e.getMessage());
         }
     }
+
+    @Override
+    public Optional<Caregiver> handle(UpdateCaregiverCommand command) {
+        var optionalCaregiver = this.caregiverRepository.findById(command.caregiverId());
+        if (optionalCaregiver.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var caregiver = optionalCaregiver.get();
+        caregiver.updateInformation(
+                command.completeName(),
+                command.age(),
+                command.address(),
+                command.caregiverExperience(),
+                command.completedServices(),
+                command.biography(),
+                command.profileImage(),
+                command.farePerHour(),
+                command.districtsScope(),
+                command.profileId()
+        );
+
+        this.caregiverRepository.save(caregiver);
+        return Optional.of(caregiver);
+    }
 }
