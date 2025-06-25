@@ -9,6 +9,7 @@ import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByIdQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByLocationQuery;
+import pe.edu.upc.center.platform.user.domain.model.valueobjects.Districts;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverCommandService;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverQueryService;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.CaregiverResource;
@@ -19,6 +20,7 @@ import pe.edu.upc.center.platform.user.interfaces.rest.transform.*;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.UpdateCaregiverResource;
 import pe.edu.upc.center.platform.user.interfaces.rest.transform.UpdateCaregiverCommandFromResourceAssembler;
 
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})

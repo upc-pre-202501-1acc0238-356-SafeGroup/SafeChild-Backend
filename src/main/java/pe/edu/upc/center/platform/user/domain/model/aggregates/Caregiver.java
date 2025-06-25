@@ -7,7 +7,7 @@ import pe.edu.upc.center.platform.user.domain.model.commands.CreateCaregiverComm
 import pe.edu.upc.center.platform.user.domain.model.commands.UpdateCaregiverCommand;
 import pe.edu.upc.center.platform.user.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-
+import pe.edu.upc.center.platform.user.domain.model.valueobjects.Districts;
 
 @Entity
 @Table(name = "Caregiver")
@@ -50,8 +50,9 @@ public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
 
     @Getter
     @Setter
-    @Column(name = "district_scope",nullable = false)
-    private String districtsScope;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "district_scope", nullable = false)
+    private Districts districtsScope;
 
     @Getter
     @Setter
@@ -97,7 +98,7 @@ public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
         this.biography = biography;
         this.profileImage = profileImage;
         this.farePerHour = farePerHour;
-        this.districtsScope = districtsScope;
+        this.districtsScope = Districts.valueOf(districtsScope);
         this.profileId = profileId;
         return this;
     }

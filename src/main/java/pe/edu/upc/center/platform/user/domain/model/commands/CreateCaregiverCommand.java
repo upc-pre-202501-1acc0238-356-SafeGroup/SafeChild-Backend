@@ -1,6 +1,15 @@
 package pe.edu.upc.center.platform.user.domain.model.commands;
 
+import  pe.edu.upc.center.platform.user.domain.model.valueobjects.Districts;
 
-public record CreateCaregiverCommand(String completeName, Integer age, String address, Integer caregiverExperience, Integer completedServices,
-                                     String biography, String profileImage, Double farePerHour, String districtsScope) {
+public record CreateCaregiverCommand(
+        String completeName,
+        Integer age,
+        String address,
+        Integer caregiverExperience,
+        Integer completedServices,
+        String biography,
+        String profileImage,
+        Double farePerHour,
+        Districts districtsScope) {
 }

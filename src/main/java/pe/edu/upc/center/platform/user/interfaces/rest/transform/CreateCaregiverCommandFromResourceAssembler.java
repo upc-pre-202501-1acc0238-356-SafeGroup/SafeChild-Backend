@@ -6,7 +6,14 @@ import pe.edu.upc.center.platform.user.interfaces.rest.resources.CreateCaregiver
 
 public class CreateCaregiverCommandFromResourceAssembler {
     public static CreateCaregiverCommand toCommandFromResource(CreateCaregiverResource resource) {
-        return new CreateCaregiverCommand(resource.completeName(), resource.age(), resource.address(), resource.caregiverExperience(), resource.completedServices(),
-                resource.biography(), resource.profileImage(), resource.farePerHour(), resource.districtsScope());
+        return new CreateCaregiverCommand(resource.completeName(),
+                resource.age(),
+                resource.address(),
+                resource.caregiverExperience(),
+                resource.completedServices(),
+                resource.biography(),
+                resource.profileImage(),
+                resource.farePerHour(),
+                resource.districtsScope());
     }
 }

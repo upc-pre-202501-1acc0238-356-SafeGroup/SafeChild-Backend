@@ -9,6 +9,9 @@ import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositori
 import pe.edu.upc.center.platform.user.infrastructure.persistence.jpa.repositories.CaregiverScheduleRepository;
 import pe.edu.upc.center.platform.user.domain.model.commands.*;
 
+import org.springframework.stereotype.Service;
+import pe.edu.upc.center.platform.user.domain.model.valueobjects.Districts;
+
 import java.util.Optional;
 
 @Service
@@ -65,19 +68,16 @@ public class CaregiverCommandServiceImpl implements CaregiverCommandService {
 
     @Override
     public Optional<Caregiver> handle(UpdateCaregiverPlaceFareCommand command) {
-        var optionalCaregiver = this.caregiverRepository.findById(command.caregiverId());
+        var optionalCaregiver = caregiverRepository.findById(command.caregiverId());
         if (optionalCaregiver.isEmpty()) {
             throw new IllegalArgumentException("Caregiver not found");
         }
-
         optionalCaregiver = optionalCaregiver.map(caregiver -> {
-            caregiver.setDistrictsScope(command.districtsScope());
+            caregiver.setDistrictsScope(Districts.valueOf(command.districtsScope()));
             caregiver.setFarePerHour(command.farePerHour());
             return caregiver;
         });
-
-        this.caregiverRepository.save(optionalCaregiver.get());
-
+        caregiverRepository.save(optionalCaregiver.get());
         return optionalCaregiver;
     }
 

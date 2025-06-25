@@ -5,8 +5,22 @@ import pe.edu.upc.center.platform.user.interfaces.rest.resources.CaregiverResour
 
 public class CaregiverResourceFromEntityAssembler {
     public static CaregiverResource toResourceFromEntity(Caregiver entity) {
-        return new CaregiverResource(entity.getId(), entity.getCompleteName().completeName(), entity.getAge(), entity.getAddress(), entity.getCaregiverExperience(),
-                entity.getCompletedServices(), entity.getBiography(), entity.getProfileImage(), entity.getFarePerHour(),
-                entity.getDistrictsScope(), entity.getProfileId());
+        String district = (entity.getDistrictsScope() != null)
+                ? entity.getDistrictsScope().name()
+                : null;
+
+        return new CaregiverResource(
+                entity.getId(),
+                entity.getCompleteName().completeName(),
+                entity.getAge(),
+                entity.getAddress(),
+                entity.getCaregiverExperience(),
+                entity.getCompletedServices(),
+                entity.getBiography(),
+                entity.getProfileImage(),
+                entity.getFarePerHour(),
+                district,
+                entity.getProfileId()
+        );
     }
 }
