@@ -16,5 +16,8 @@ public interface CaregiverCommandService {
     Optional<Caregiver> handle(UpdateCaregiverPlaceFareCommand command);
 
     Optional<CaregiverSchedule> handle(UpdateCaregiverScheduleCommand command);
+
     void handle(DeleteCaregiverScheduleCommand command);
+
+    Optional<Caregiver> handle(UpdateCaregiverCommand command);
 }

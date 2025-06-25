@@ -1,12 +1,13 @@
 package pe.edu.upc.center.platform.iam.interfaces.acl;
 
-import org.apache.logging.log4j.util.Strings;
+
 import pe.edu.upc.center.platform.iam.domain.model.commands.SignUpCommand;
 import pe.edu.upc.center.platform.iam.domain.model.entities.Role;
 import pe.edu.upc.center.platform.iam.domain.model.queries.GetUserByIdQuery;
 import pe.edu.upc.center.platform.iam.domain.model.queries.GetUserByUsernameQuery;
 import pe.edu.upc.center.platform.iam.domain.services.UserCommandService;
 import pe.edu.upc.center.platform.iam.domain.services.UserQueryService;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,4 +91,3 @@ public class IamContextFacade {
         return result.get().getUsername();
     }
 }
-

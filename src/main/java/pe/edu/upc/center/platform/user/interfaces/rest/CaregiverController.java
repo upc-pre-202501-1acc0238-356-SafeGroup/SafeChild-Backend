@@ -9,17 +9,18 @@ import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetAllCaregiverQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByIdQuery;
 import pe.edu.upc.center.platform.user.domain.model.queries.GetCaregiverByLocationQuery;
+import pe.edu.upc.center.platform.user.domain.model.valueobjects.Districts;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverCommandService;
 import pe.edu.upc.center.platform.user.domain.services.CaregiverQueryService;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.CaregiverResource;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.CreateCaregiverResource;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.UpdateCaregiverBiographyResource;
 import pe.edu.upc.center.platform.user.interfaces.rest.resources.UpdateCaregiverPlaceFareResource;
-import pe.edu.upc.center.platform.user.interfaces.rest.transform.CaregiverResourceFromEntityAssembler;
-import pe.edu.upc.center.platform.user.interfaces.rest.transform.CreateCaregiverCommandFromResourceAssembler;
-import pe.edu.upc.center.platform.user.interfaces.rest.transform.UpdateCaregiverBiographyCommandFromResourceAssembler;
-import pe.edu.upc.center.platform.user.interfaces.rest.transform.UpdateCaregiverPlaceFareCommandFromResourceAssembler;
+import pe.edu.upc.center.platform.user.interfaces.rest.transform.*;
+import pe.edu.upc.center.platform.user.interfaces.rest.resources.UpdateCaregiverResource;
+import pe.edu.upc.center.platform.user.interfaces.rest.transform.UpdateCaregiverCommandFromResourceAssembler;
 
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
@@ -42,6 +43,18 @@ public class CaregiverController {
         Caregiver caregiver = caregiverCommandService.handle(createCaregiverCommand);
 
         return new ResponseEntity<>(CaregiverResourceFromEntityAssembler.toResourceFromEntity(caregiver), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{caregiverId}")
+    public ResponseEntity<CaregiverResource> updateCaregiver(@PathVariable Long caregiverId, @RequestBody UpdateCaregiverResource resource) {
+        var updateCaregiverCommand = UpdateCaregiverCommandFromResourceAssembler.toCommandFromResource(caregiverId, resource);
+        var optionalCaregiver = caregiverCommandService.handle(updateCaregiverCommand);
+
+        if (optionalCaregiver.isEmpty())
+            return ResponseEntity.badRequest().build();
+
+        var caregiverResource = CaregiverResourceFromEntityAssembler.toResourceFromEntity(optionalCaregiver.get());
+        return ResponseEntity.ok(caregiverResource);
     }
 
     @PatchMapping("/biography")

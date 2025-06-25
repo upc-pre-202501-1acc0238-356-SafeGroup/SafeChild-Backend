@@ -1,7 +1,7 @@
 package pe.edu.upc.center.platform.payment.interfaces.rest.resources;
 
-public record CreatePaymentResource(Long userId,
-                                    Long reservationId,
-                                    Long cardId) {
+import pe.edu.upc.center.platform.payment.domain.model.valueobjects.Currency;
+
+public record CreatePaymentResource(Currency currency, Long amount, Long reservationId) {
 }
 
