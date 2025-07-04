@@ -11,10 +11,6 @@ import java.util.List;
 @Repository
 public interface ScheduleShiftRepository extends JpaRepository<ScheduleShift, Long> {
 
-    boolean existsByStartTimeAndEndTime(LocalTime startTime, LocalTime endTime);
-
     List<ScheduleShift> findByScheduleIdAndAvailable(Long scheduleId, boolean available);
-
-
 
 }

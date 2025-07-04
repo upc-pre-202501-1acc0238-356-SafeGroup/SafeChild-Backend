@@ -11,5 +11,6 @@ public interface ScheduleQueryService {
 
     List<Schedule> handle(GetAllSchedulesQuery query);
     Optional<Schedule> handle(GetByIdQuery query);
+    List<Schedule> handle(GetBySchedulesByCaregiverIdQuery query);
 
 }
