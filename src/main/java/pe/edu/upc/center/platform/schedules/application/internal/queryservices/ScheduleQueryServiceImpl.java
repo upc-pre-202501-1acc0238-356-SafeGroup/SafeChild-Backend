@@ -19,8 +19,6 @@ public class ScheduleQueryServiceImpl implements ScheduleQueryService {
         this.scheduleRepository = scheduleRepository;
     }
 
-
-
     @Override
     public List<Schedule> handle(GetAllSchedulesQuery query) {
         return scheduleRepository.findAll();
@@ -32,8 +30,8 @@ public class ScheduleQueryServiceImpl implements ScheduleQueryService {
     }
 
     @Override
-    public List<Schedule> handdle(GetByAdvisorIdQuery query) {
-        return scheduleRepository.findScheduleByAdvisorId(query.advisorId());
+    public List<Schedule> handle(GetBySchedulesByCaregiverIdQuery query) {
+        return scheduleRepository.findScheduleByCaregiverId(query.caregiverId());
     }
 
 
