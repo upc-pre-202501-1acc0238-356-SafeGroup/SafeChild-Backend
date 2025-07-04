@@ -1,6 +1,7 @@
 package pe.edu.upc.center.platform.schedules.domain.model.aggregates;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import pe.edu.upc.center.platform.schedules.domain.model.commands.CreateScheduleCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Schedule extends AuditableAbstractAggregateRoot<Schedule> {
 
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<ScheduleShift> scheduleShifts = new ArrayList<>();
 
 
@@ -41,8 +43,8 @@ public class Schedule extends AuditableAbstractAggregateRoot<Schedule> {
     }
 
     public Schedule(CreateScheduleCommand command) {
+        this.caregiverId = command.caregiverId();
         this.availableDate = command.availableDate();
-        this.scheduleShifts = new ArrayList<>();
     }
 
     public Schedule updateScheduleInformation(
