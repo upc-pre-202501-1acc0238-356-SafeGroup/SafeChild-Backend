@@ -2,6 +2,7 @@ package pe.edu.upc.center.platform.iam.infrastructure.authorization.sfs.configur
 
 
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import pe.edu.upc.center.platform.iam.infrastructure.authorization.sfs.pipeline.BearerAuthorizationRequestFilter;
 import pe.edu.upc.center.platform.iam.infrastructure.hashing.bcrypt.BCryptHashingService;
 import pe.edu.upc.center.platform.iam.infrastructure.tokens.jwt.BearerTokenService;
@@ -82,7 +83,7 @@ public class WebSecurityConfiguration {
             .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                     .requestMatchers(
-                            "/api/v1/authentication/**",
+                            "/api/v1/**",
                             "/v3/api-docs/**",
                             "/swagger-ui.html",
                             "/swagger-ui/**",
