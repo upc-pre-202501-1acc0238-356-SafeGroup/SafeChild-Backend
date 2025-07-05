@@ -1,14 +1,17 @@
 package pe.edu.upc.center.platform.payment.interfaces.rest.resources;
 
-import pe.edu.upc.center.platform.card.domain.model.aggregates.Card;
-import pe.edu.upc.center.platform.reservation.domain.model.aggregates.Reservation;
+import pe.edu.upc.center.platform.payment.domain.model.valueobjects.Currency;
+import pe.edu.upc.center.platform.payment.domain.model.valueobjects.PaymentStatus;
 
-import java.util.Date;
 
 public record PaymentResource(
         Long id,
-        Long userId,
-        Reservation reservation,
-        Card card,
-        Date createdAt) {
+        Currency currency,
+        PaymentStatus paymentStatus,
+        Long amount,
+        Long reservation,
+        Long caregiverId,
+        Long tutorId,
+        String stripePaymentId) {
 }
+

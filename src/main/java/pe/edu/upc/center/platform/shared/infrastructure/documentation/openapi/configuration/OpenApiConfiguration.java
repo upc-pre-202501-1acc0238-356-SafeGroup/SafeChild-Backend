@@ -27,18 +27,18 @@ public class OpenApiConfiguration {
                     .description(" Learning Platform Documentation")
                     .url("https://github.com/upc-is-si729/daos-language-reference"));
 
-//    // Add security scheme
-//    final String securitySchemeName = "bearerAuth";
-//
-//    openApi.addSecurityItem(new SecurityRequirement()
-//                    .addList(securitySchemeName))
-//            .components(new Components()
-//                    .addSecuritySchemes(securitySchemeName,
-//                            new SecurityScheme()
-//                                    .name(securitySchemeName)
-//                                    .type(SecurityScheme.Type.HTTP)
-//                                    .scheme("bearer")
-//                                    .bearerFormat("JWT")));
+    // Add security scheme
+    final String securitySchemeName = "bearerAuth";
+
+    openApi.addSecurityItem(new SecurityRequirement()
+                    .addList(securitySchemeName))
+            .components(new Components()
+                    .addSecuritySchemes(securitySchemeName,
+                            new SecurityScheme()
+                                    .name(securitySchemeName)
+                                    .type(SecurityScheme.Type.HTTP)
+                                    .scheme("bearer")
+                                    .bearerFormat("JWT")));
 
     return openApi;
   }
