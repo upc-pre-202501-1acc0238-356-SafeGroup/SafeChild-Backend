@@ -8,8 +8,13 @@ public class PaymentResourceFromEntityAssembler {
         return new PaymentResource(
                 payment.getId(),
                 payment.getCurrency(),
+                payment.getPaymentStatus(),
                 payment.getAmount(),
-                payment.getReservationId().reservationId()
+                payment.getReservation().getId(),
+                payment.getReservation().getCaregiverId(),
+                payment.getReservation().getTutorId(),
+                payment.getStripePaymentId()
+
         );
     }
 }
