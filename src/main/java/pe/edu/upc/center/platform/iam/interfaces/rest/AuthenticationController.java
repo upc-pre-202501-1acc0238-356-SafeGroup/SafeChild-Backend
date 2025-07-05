@@ -9,15 +9,11 @@ import pe.edu.upc.center.platform.iam.interfaces.rest.transform.AuthenticatedUse
 import pe.edu.upc.center.platform.iam.interfaces.rest.transform.SignInCommandFromResourceAssembler;
 import pe.edu.upc.center.platform.iam.interfaces.rest.transform.SignUpCommandFromResourceAssembler;
 import pe.edu.upc.center.platform.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 /**
  * AuthenticationController
@@ -30,14 +26,13 @@ import org.springframework.web.bind.annotation.*;
  *     </ul>
  * </p>
  */
+@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE })
 @RestController
 @RequestMapping(value = "/api/v1/authentication", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE })
-@Tag(name = "Authentication", description = "Authentication Endpoints")
+@Tag(name = "IAM", description = "Authentication Endpoints")
 public class AuthenticationController {
 
   private final UserCommandService userCommandService;
-
 
   public AuthenticationController(UserCommandService userCommandService) {
     this.userCommandService = userCommandService;
@@ -49,12 +44,6 @@ public class AuthenticationController {
    * @return the authenticated user resource.
    */
   @PostMapping("/sign-in")
-  @Operation(summary = "Handles the sign-in request")
-@ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "User signed in successfully"),
-        @ApiResponse(responseCode = "404", description = "User not found"),
-        @ApiResponse(responseCode = "500", description = "Internal server error occurred during sign-in process")
-})
   public ResponseEntity<AuthenticatedUserResource> signIn(
       @RequestBody SignInResource signInResource) {
 
@@ -77,10 +66,6 @@ public class AuthenticationController {
    * @return the created user resource.
    */
   @PostMapping("/sign-up")
-  @Operation(summary = "Handles the sign-up request")
-  @ApiResponses( value = {
-          @ApiResponse(responseCode = "200", description = "User signed up successfully")
-          , @ApiResponse(responseCode = "400", description = "Bad request")})
   public ResponseEntity<UserResource> signUp(@RequestBody SignUpResource signUpResource) {
     var signUpCommand = SignUpCommandFromResourceAssembler
         .toCommandFromResource(signUpResource);
@@ -89,7 +74,7 @@ public class AuthenticationController {
       return ResponseEntity.badRequest().build();
     }
     var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
+
     return new ResponseEntity<>(userResource, HttpStatus.CREATED);
   }
-
 }

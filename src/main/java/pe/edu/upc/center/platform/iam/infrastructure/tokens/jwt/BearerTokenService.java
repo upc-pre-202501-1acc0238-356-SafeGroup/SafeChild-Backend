@@ -4,8 +4,6 @@ import pe.edu.upc.center.platform.iam.application.internal.outboundservices.toke
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 
-
-
 /**
  * This interface is a marker interface for the JWT token service.
  * It extends the {@link TokenService} interface.

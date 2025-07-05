@@ -9,48 +9,67 @@ import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.payment.domain.model.aggregates.Payment;
 import pe.edu.upc.center.platform.payment.domain.model.commands.CreatePaymentCommand;
 import pe.edu.upc.center.platform.payment.domain.model.commands.UpdatePaymentIntentCommand;
+import pe.edu.upc.center.platform.payment.domain.model.commands.UpdatePaymentStatusCommand;
+import pe.edu.upc.center.platform.payment.domain.model.valueobjects.PaymentStatus;
 import pe.edu.upc.center.platform.payment.domain.services.PaymentCommandService;
 import pe.edu.upc.center.platform.payment.infrastructure.persistence.jpa.respositories.PaymentRepository;
+import pe.edu.upc.center.platform.reservation.domain.model.aggregates.Reservation;
+import pe.edu.upc.center.platform.reservation.infrastructure.persistence.jpa.repositories.ReservationRepository;
+import pe.edu.upc.center.platform.schedules.domain.model.aggregates.Schedule;
+import pe.edu.upc.center.platform.schedules.domain.model.commands.UpdateScheduleDateCommand;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
 public class CommandServiceImpl implements PaymentCommandService {
 
     private final PaymentRepository paymentRepository;
-
+    private final ReservationRepository reservationRepository;
     @Value("${stripe.api.key.test}")
     private String key;
 
-    public CommandServiceImpl(PaymentRepository paymentRepository) {
+    public CommandServiceImpl(PaymentRepository paymentRepository, ReservationRepository reservationRepository) {
         this.paymentRepository = paymentRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
     public PaymentIntent handle(CreatePaymentCommand command) {
         Stripe.apiKey = key;
 
+        Reservation reservation = reservationRepository.findById(command.reservation())
+                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+        long amount = (long)reservation.getTotalAmount();
+        amount = amount * 100;
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
-                        .setAmount(command.amount())
+                        .setAmount(amount)
                         .setCurrency(command.currency().name())
-                        .setAutomaticPaymentMethods(
-                                PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-                                        .setEnabled(true)
-                                        .build()
-                        )
+                        //TODO: ACTIVAR PARA USAR PAGO AUTOMÁTICO DESDE FLUTTER
+//                        .setAutomaticPaymentMethods(
+//                                PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
+//                                        .setEnabled(true)
+//                                        .setAllowRedirects(PaymentIntentCreateParams.AutomaticPaymentMethods.AllowRedirects.NEVER)
+//                                        .build()
+//                        )
+                        .addPaymentMethodType("card")
                         .build();
 
         try {
+
             PaymentIntent paymentIntent = PaymentIntent.create(params);
+
+            paymentIntent = PaymentIntent.retrieve(paymentIntent.getId());
 
             Payment payment = new Payment(command);
             payment.setCurrency(command.currency());
-            payment.setAmount(command.amount());
-            payment.setReservationId(command.reservationId());
+            payment.setAmount(amount);
+            payment.setReservation(reservation);
             payment.setStripePaymentId(paymentIntent.getId());
+            payment.setPaymentStatus(PaymentStatus.valueOf(paymentIntent.getStatus().toUpperCase()));
 
             paymentRepository.save(payment);
 
@@ -82,7 +101,32 @@ public class CommandServiceImpl implements PaymentCommandService {
 //        } else {
 //            throw new IllegalArgumentException("Payment with Stripe ID %s not found in the database".formatted(paymentIntentId));
 //        }
+
+
+
         return confirmedPaymentIntent;
     }
+
+    @Override
+    public Optional<Payment> handle(UpdatePaymentStatusCommand command) {
+        Optional<Payment> optionalPayment = paymentRepository.findPaymentById(command.id());
+
+        if (optionalPayment.isEmpty()) {
+            throw new IllegalArgumentException("Payment with id %s not found".formatted(command.id()));
+        }
+
+        Payment paymentToUpdate = optionalPayment.get();
+
+        String paymentStatus = String.valueOf(command.paymentStatus());
+
+        PaymentStatus updatedPaymentStatus = PaymentStatus.valueOf(paymentStatus.toUpperCase());
+
+        paymentToUpdate.setPaymentStatus(updatedPaymentStatus);
+
+        Payment updatedPayment = paymentRepository.save(paymentToUpdate);
+
+        return Optional.of(updatedPayment);
+    }
+
 
 }
