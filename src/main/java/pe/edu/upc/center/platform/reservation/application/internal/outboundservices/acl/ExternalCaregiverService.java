@@ -1,8 +1,8 @@
 package pe.edu.upc.center.platform.reservation.application.internal.outboundservices.acl;
 
 import org.springframework.stereotype.Service;
-import pe.edu.upc.center.platform.user.domain.model.aggregates.Caregiver;
-import pe.edu.upc.center.platform.user.interfaces.acl.CaregiverContextFacade;
+import pe.edu.upc.center.platform.usermanagement.domain.model.aggregates.Caregiver;
+import pe.edu.upc.center.platform.usermanagement.interfaces.acl.CaregiverContextFacade;
 
 import java.util.Optional;
 
