@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.center.platform.payment.domain.model.commands.UpdatePaymentIntentCommand;
+import pe.edu.upc.center.platform.payment.domain.model.queries.GetByIdQuery;
 import pe.edu.upc.center.platform.payment.domain.model.queries.GetPaymentIntentIdQuery;
 import pe.edu.upc.center.platform.payment.domain.services.PaymentCommandService;
 import pe.edu.upc.center.platform.payment.domain.services.PaymentQueryService;
@@ -72,7 +73,7 @@ public class PaymentsController {
     }
 
 
-    @GetMapping("/{paymentIntentId}")
+    @GetMapping("/paymentIntent/{paymentIntentId}")
     public ResponseEntity<Map<String, Object>> getPaymentIntend(@PathVariable String paymentIntentId) throws StripeException {
 
         Stripe.apiKey = key; // Asigna el valor directamente o desde env
@@ -93,7 +94,21 @@ public class PaymentsController {
     }
 
 
-
+    @GetMapping("/{id}")
+    @Operation(summary = "Get Payment by ID", description = "Retrieves a payment by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Payment retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Payment not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<Object> getPaymentById(@PathVariable Long id) {
+        var payment = paymentQueryService.handle(new GetByIdQuery(id));
+        if (payment.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "El Payment con el ID proporcionado no existe."));
+        }
+        return ResponseEntity.ok(payment.get());
+    }
 
 
 

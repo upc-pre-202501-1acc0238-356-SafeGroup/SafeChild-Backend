@@ -3,6 +3,7 @@ package pe.edu.upc.center.platform.payment.application.internal.queryservices;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.payment.domain.model.aggregates.Payment;
 import pe.edu.upc.center.platform.payment.domain.model.queries.GetAllPaymentsQuery;
+import pe.edu.upc.center.platform.payment.domain.model.queries.GetByIdQuery;
 import pe.edu.upc.center.platform.payment.domain.model.queries.GetPaymentIntentIdQuery;
 import pe.edu.upc.center.platform.payment.domain.model.queries.GetPaymentByReservationIdQuery;
 import pe.edu.upc.center.platform.payment.domain.services.PaymentQueryService;
@@ -33,6 +34,11 @@ public class QueryServiceImpl implements PaymentQueryService {
     @Override
     public Optional<Payment> handle(GetPaymentIntentIdQuery query) {
         return this.paymentRepository.findByStripePaymentId(query.paymentIntentId());
+    }
+
+    @Override
+    public Optional<Payment> handle(GetByIdQuery query) {
+        return this.paymentRepository.findPaymentByIdyId(query.id());
     }
 
 
