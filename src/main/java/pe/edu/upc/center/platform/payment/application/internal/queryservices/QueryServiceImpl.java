@@ -2,10 +2,7 @@ package pe.edu.upc.center.platform.payment.application.internal.queryservices;
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.payment.domain.model.aggregates.Payment;
-import pe.edu.upc.center.platform.payment.domain.model.queries.GetAllPaymentsQuery;
-import pe.edu.upc.center.platform.payment.domain.model.queries.GetByIdQuery;
-import pe.edu.upc.center.platform.payment.domain.model.queries.GetPaymentIntentIdQuery;
-import pe.edu.upc.center.platform.payment.domain.model.queries.GetPaymentByReservationIdQuery;
+import pe.edu.upc.center.platform.payment.domain.model.queries.*;
 import pe.edu.upc.center.platform.payment.domain.services.PaymentQueryService;
 import pe.edu.upc.center.platform.payment.infrastructure.persistence.jpa.respositories.PaymentRepository;
 
@@ -38,7 +35,17 @@ public class QueryServiceImpl implements PaymentQueryService {
 
     @Override
     public Optional<Payment> handle(GetByIdQuery query) {
-        return this.paymentRepository.findPaymentByIdyId(query.id());
+        return this.paymentRepository.findPaymentById(query.id());
+    }
+
+    @Override
+    public List<Payment> handle(GetPaymentsByCaregiverIdAndPaymentStatusQuery query) {
+        return this.paymentRepository.findPaymentByReservation_CaregiverIdAndPaymentStatus(query.caregiverId(), query.paymentStatus());
+    }
+
+    @Override
+    public List<Payment> handle(GetPaymentsByCaregiverIdQuery query) {
+        return this.paymentRepository.findPaymentByReservation_CaregiverId(query.id());
     }
 
 
