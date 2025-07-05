@@ -4,7 +4,6 @@ import pe.edu.upc.center.platform.iam.infrastructure.hashing.bcrypt.BCryptHashin
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 /**
  * This class implements the {@link BCryptHashingService} interface.
  * It is used to hash passwords using the BCrypt algorithm.

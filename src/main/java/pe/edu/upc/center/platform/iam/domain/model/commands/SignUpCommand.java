@@ -1,7 +1,6 @@
 package pe.edu.upc.center.platform.iam.domain.model.commands;
 
 
-
 import pe.edu.upc.center.platform.iam.domain.model.entities.Role;
 
 import java.util.List;

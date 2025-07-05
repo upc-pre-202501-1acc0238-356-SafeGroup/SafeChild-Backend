@@ -1,5 +1,6 @@
 package pe.edu.upc.center.platform.iam.application.internal.commandservices;
 
+
 import pe.edu.upc.center.platform.iam.application.internal.outboundservices.hashing.HashingService;
 import pe.edu.upc.center.platform.iam.application.internal.outboundservices.tokens.TokenService;
 import pe.edu.upc.center.platform.iam.domain.model.aggregates.User;
@@ -30,7 +31,7 @@ public class UserCommandServiceImpl implements UserCommandService {
   private final RoleRepository roleRepository;
 
   public UserCommandServiceImpl(UserRepository userRepository, HashingService hashingService,
-                                TokenService tokenService, RoleRepository roleRepository) {
+      TokenService tokenService, RoleRepository roleRepository) {
 
     this.userRepository = userRepository;
     this.hashingService = hashingService;
