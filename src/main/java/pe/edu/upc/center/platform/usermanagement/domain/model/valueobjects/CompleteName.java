@@ -9,8 +9,8 @@ public record CompleteName(String completeName) {
     }
 
     public CompleteName {
-        if(completeName == null || completeName.isBlank()) {
-            throw new IllegalArgumentException("The complete name cannot be null or blank");
+        if(completeName == null) {
+            throw new IllegalArgumentException("The complete name cannot be null");
         }
     }
 }
