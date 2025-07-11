@@ -3,14 +3,21 @@ package pe.edu.upc.center.platform.usermanagement.domain.model.aggregates;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateCaregiverByIdCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateCaregiverCommand;
+import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorByIdCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Districts;
 
 @Entity
 @Table(name = "Caregiver")
-public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
+@Getter
+@Setter
+public class Caregiver  {
+
+    @Id
+    private Long id;
 
     @Getter
     @Column(name = "complete_name",nullable = false)
@@ -77,6 +84,10 @@ public class Caregiver extends AuditableAbstractAggregateRoot<Caregiver> {
 
     public Caregiver() {
 
+    }
+
+    public Caregiver(CreateCaregiverByIdCommand command){
+        this.id = command.id();
     }
 
 

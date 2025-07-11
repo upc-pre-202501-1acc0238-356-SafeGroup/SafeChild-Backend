@@ -1,11 +1,8 @@
 package pe.edu.upc.center.platform.iam.domain.model.entities;
 
+import lombok.*;
 import pe.edu.upc.center.platform.iam.domain.model.valueobjects.Roles;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
 
 import java.util.List;
 
@@ -21,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @With
+@Getter
 public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

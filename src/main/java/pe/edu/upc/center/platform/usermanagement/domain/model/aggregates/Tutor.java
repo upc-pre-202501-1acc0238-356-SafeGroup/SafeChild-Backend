@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import pe.edu.upc.center.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorByIdCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Address;
 import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Document;
@@ -14,7 +15,12 @@ import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Phone
 
 @Entity
 @Table(name = "tutors")
-public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
+@Getter
+@Setter
+public class Tutor  {
+
+    @Id
+    private Long id;
 
     @Getter
     @NotNull
@@ -126,6 +132,10 @@ public class Tutor extends AuditableAbstractAggregateRoot<Tutor> {
         this.phone= new Phone(command.number());
         this.address = new Address(command.street(),command.district());
         this.role = command.role();
+    }
+
+    public Tutor(CreateTutorByIdCommand command){
+        this.id = command.id();
     }
 
     public Tutor updateInformation(String fullName, String email, String doc, String password, String number, String street,String district, String role){
