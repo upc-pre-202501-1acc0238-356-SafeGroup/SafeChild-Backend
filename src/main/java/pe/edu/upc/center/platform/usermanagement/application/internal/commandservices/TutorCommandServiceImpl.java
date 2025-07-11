@@ -3,9 +3,14 @@ package pe.edu.upc.center.platform.usermanagement.application.internal.commandse
 import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.usermanagement.application.internal.outboundservices.acl.ExternalProfileService;
 import pe.edu.upc.center.platform.usermanagement.domain.model.aggregates.Tutor;
+import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorByIdCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.commands.DeleteTutorCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.commands.UpdateTutorCommand;
+import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Address;
+import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Document;
+import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Email;
+import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Phone;
 import pe.edu.upc.center.platform.usermanagement.domain.services.TutorCommandService;
 import pe.edu.upc.center.platform.usermanagement.infrastructure.persistence.jpa.repositories.TutorRepository;
 
@@ -45,6 +50,38 @@ public class TutorCommandServiceImpl implements TutorCommandService {
     }
 
     @Override
+    public Optional<Tutor> handle(CreateTutorByIdCommand command) {
+        var tutorId = command.id();
+
+        if (this.tutorRepository.existsById(tutorId)) {
+            throw new IllegalArgumentException("Tutor with id " + tutorId + " already exists");
+        }
+
+        var profileId = externalProfileService.createProfile();
+        if (profileId.isEmpty()) {
+            throw new IllegalArgumentException("Error while creating profile");
+        }
+
+        var tutor = new Tutor();
+        tutor.setId(tutorId);
+        tutor.setFullName("Nuevo Tutor");
+        tutor.setPassword("12345678");
+        tutor.setMail(new Email("tutor" + tutorId + "@correo.com"));
+        tutor.setDocument(new Document("00000000"));
+        tutor.setPhone(new Phone("999999999"));
+        tutor.setAddress(new Address("Dirección por defecto", "MIRAFLORES"));
+        tutor.setRole("Tutor");
+        tutor.setProfileId(profileId.get());
+
+        try {
+            return Optional.of(this.tutorRepository.save(tutor));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while saving Tutor: " + e.getMessage());
+        }
+    }
+
+
+    @Override
     public Optional<Tutor> handle(UpdateTutorCommand command) {
         var tutorId = command.tutorId();
         var fullName = command.fullName();
@@ -66,6 +103,7 @@ public class TutorCommandServiceImpl implements TutorCommandService {
             throw new IllegalArgumentException("Error while updating tutor: " + e.getMessage());
         }
     }
+
 
     @Override
     public void handle(DeleteTutorCommand command) {

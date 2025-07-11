@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.usermanagement.application.internal.outboundservices.acl.ExternalProfileService;
 import pe.edu.upc.center.platform.usermanagement.domain.model.aggregates.Caregiver;
 import pe.edu.upc.center.platform.usermanagement.domain.model.entities.CaregiverSchedule;
+import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.CompleteName;
 import pe.edu.upc.center.platform.usermanagement.domain.services.CaregiverCommandService;
 import pe.edu.upc.center.platform.usermanagement.infrastructure.persistence.jpa.repositories.CaregiverRepository;
 import pe.edu.upc.center.platform.usermanagement.infrastructure.persistence.jpa.repositories.CaregiverScheduleRepository;
@@ -11,6 +12,7 @@ import pe.edu.upc.center.platform.usermanagement.domain.model.commands.*;
 
 import pe.edu.upc.center.platform.usermanagement.domain.model.valueobjects.Districts;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -36,6 +38,32 @@ public class CaregiverCommandServiceImpl implements CaregiverCommandService {
         caregiver.setProfileId(profileId.get());
 
         return this.caregiverRepository.save(caregiver);
+    }
+
+    @Override
+    public Optional<Caregiver> handle(CreateCaregiverByIdCommand command) {
+        var caregiverId = command.id();
+
+
+        var profileId = externalProfileService.createProfile();
+
+        if (profileId.isEmpty()) throw new IllegalArgumentException("Error while creating profile");
+
+
+        var caregiver = new Caregiver();
+        caregiver.setId(caregiverId);
+        caregiver.setCompleteName(new CompleteName(""));
+        caregiver.setAge(0);
+        caregiver.setAddress("");
+        caregiver.setCaregiverExperience(0);
+        caregiver.setCompletedServices(0);
+        caregiver.setBiography("");
+        caregiver.setProfileImage(""); // o alguna imagen temporal
+        caregiver.setFarePerHour((double) 0);
+        caregiver.setDistrictsScope(Districts.CHORRILLOS);
+        caregiver.setProfileId(profileId.get());
+
+        return Optional.of(this.caregiverRepository.save(caregiver));
     }
 
     @Override
