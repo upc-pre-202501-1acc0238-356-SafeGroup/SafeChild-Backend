@@ -2,6 +2,9 @@ package pe.edu.upc.center.platform.usermanagement.interfaces.acl;
 
 import org.springframework.stereotype.Service;
 import pe.edu.upc.center.platform.usermanagement.domain.model.aggregates.Caregiver;
+import pe.edu.upc.center.platform.usermanagement.domain.model.aggregates.Tutor;
+import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateCaregiverByIdCommand;
+import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorByIdCommand;
 import pe.edu.upc.center.platform.usermanagement.domain.model.queries.GetCaregiverByIdQuery;
 import pe.edu.upc.center.platform.usermanagement.domain.services.CaregiverCommandService;
 import pe.edu.upc.center.platform.usermanagement.domain.services.CaregiverQueryService;
@@ -23,4 +26,10 @@ public class CaregiverContextFacade {
         var getCaregiverByIdQuery = new GetCaregiverByIdQuery(caregiverId);
         return caregiverQueryService.handle(getCaregiverByIdQuery);
     }
+
+    public Optional<Caregiver> createCaregiverById(Long caregiverId){
+        var createCaregiverCommand = new CreateCaregiverByIdCommand(caregiverId);
+        return caregiverCommandService.handle(createCaregiverCommand);
+    }
+
 }
