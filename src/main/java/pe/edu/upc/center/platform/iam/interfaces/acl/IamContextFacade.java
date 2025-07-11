@@ -96,4 +96,7 @@ public class IamContextFacade {
     var getUserByUsernameQuery = new GetUserByUsernameQuery(username);
     return userQueryService.handle(getUserByUsernameQuery).isPresent();
   }
+
+
+
 }
