@@ -1,6 +1,7 @@
 package pe.edu.upc.center.platform.usermanagement.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
+import pe.edu.upc.center.platform.iam.domain.model.entities.Role;
 import pe.edu.upc.center.platform.usermanagement.application.internal.outboundservices.acl.ExternalProfileService;
 import pe.edu.upc.center.platform.usermanagement.domain.model.aggregates.Tutor;
 import pe.edu.upc.center.platform.usermanagement.domain.model.commands.CreateTutorByIdCommand;
@@ -15,7 +16,6 @@ import pe.edu.upc.center.platform.usermanagement.domain.services.TutorCommandSer
 import pe.edu.upc.center.platform.usermanagement.infrastructure.persistence.jpa.repositories.TutorRepository;
 
 import java.util.Optional;
-
 @Service
 public class TutorCommandServiceImpl implements TutorCommandService {
 
@@ -70,7 +70,7 @@ public class TutorCommandServiceImpl implements TutorCommandService {
         tutor.setDocument(new Document("00000000"));
         tutor.setPhone(new Phone("999999999"));
         tutor.setAddress(new Address("Dirección por defecto", "MIRAFLORES"));
-        tutor.setRole("Tutor");
+        tutor.setRole("TUTOR");
         tutor.setProfileId(profileId.get());
 
         try {
